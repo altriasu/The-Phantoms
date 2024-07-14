@@ -6,6 +6,7 @@ class Kyo extends Player {
         super(root, info);
 
         this.init_animations();
+        this.hp = 100;
     }
 
     init_animations() {
@@ -28,7 +29,7 @@ class Kyo extends Player {
                 obj.frame_cnt = gif.frames.length;
                 obj.loaded = true;
 
-                if (i === 3) obj.frame_rate = 4;
+                if (i === 3) obj.frame_rate = 6;
             }
         }
     }

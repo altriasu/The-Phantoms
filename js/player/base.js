@@ -17,7 +17,7 @@ class Player extends GameObject {
         this.vy = 0;
 
         this.speedx = 400; //水平移动速度
-        this.speedy = -1500; //跳起的初始速度
+        this.speedy = -2000; //跳起的初始速度
 
         this.gravity = 50;
 
@@ -27,6 +27,10 @@ class Player extends GameObject {
 
         this.animations = new Map();
         this.frame_current_cnt = 0;
+
+        this.hp = 0;
+        this.$hp = this.root.$kof.find(`.kof-head-hp${this.id}>div`);
+        this.$hp_in = this.root.$kof.find(`.kof-head-hp${this.id}>div>div`)
     }
 
     start() {
@@ -37,10 +41,13 @@ class Player extends GameObject {
         this.move();
         this.controll();
         this.update_direction();
+        this.update_attack();
         this.render();
     }
 
     update_direction() {
+        if (this.status === 6) return;
+
         let players = this.root.players;
         if (players[0] && players[1]) {
             let me = this, you = players[1 - this.id];
@@ -106,8 +113,7 @@ class Player extends GameObject {
         let left_edge = 0;
         let right_edge = this.root.gamemap.ctx.canvas.width - this.width;
 
-        if (this.status === 3)
-            this.vy += this.gravity;
+        this.vy += this.gravity;
 
 
         this.x += this.vx * this.timedelta / 1000;
@@ -129,10 +135,86 @@ class Player extends GameObject {
         }
     }
 
+    is_collision(r1, r2) {
+        if (Math.max(r1.x1, r2.x1) > Math.min(r1.x2, r2.x2)) return false;
+        if (Math.max(r1.y1, r2.y1) > Math.min(r1.y2, r2.y2)) return false;
+        return true;
+    }
+
+    is_attack() {
+        if (this.status === 6) return;
+
+        this.status = 5;
+        this.frame_current_cnt = 0;
+
+        this.hp = Math.max(this.hp - 10, 0);
+
+        this.$hp_in.animate(
+            { width: this.$hp.parent().width() * this.hp / 100 },
+            200
+        );
+
+        this.$hp.animate(
+            { width: this.$hp.parent().width() * this.hp / 100, },
+            400
+        );
+
+        // this.$hp.width(this.$hp.parent().width() * this.hp / 100);
+
+        if (this.hp <= 0) {
+            this.status = 6;
+            this.vx = 0;
+            this.frame_current_cnt = 0;
+        }
+    }
+
+    update_attack() {
+        if (this.status === 4 && this.frame_current_cnt === 18) {
+            let me = this, you = this.root.players[1 - this.id];
+            let r1, r2;
+            if (this.direction > 0) {
+                r1 = {
+                    x1: me.x + 120,
+                    y1: me.y + 40,
+                    x2: me.x + 120 + 100,
+                    y2: me.y + 40 + 20,
+                };
+            }
+            else {
+                r1 = {
+                    x1: me.x - 100,
+                    y1: me.y + 40,
+                    x2: me.x - 100 + 100,
+                    y2: me.y + 40 + 20,
+                }
+            }
+
+            r2 = {
+                x1: you.x,
+                y1: you.y,
+                x2: you.x + you.width,
+                y2: you.y + you.height,
+            }
+
+            if (this.is_collision(r1, r2)) {
+                you.is_attack();
+            }
+        }
+    }
+
     render() {
-        // this.ctx.fillStyle = this.color;
+        // this.ctx.fillStyle = 'blue';
         // this.ctx.fillRect(this.x, this.y, this.width, this.height);
         // console.log(this.x, this.y, this.width, this.height, this.color);
+
+        // if (this.direction > 0) {
+        //     this.ctx.fillStyle = 'red';
+        //     this.ctx.fillRect(this.x + 120, this.y + 40, 100, 20);
+        // }
+        // else {
+        //     this.ctx.fillStyle = 'red';
+        //     this.ctx.fillRect(this.x - 100, this.y + 40, 100, 20);
+        // }
 
         let status = this.status;
 
@@ -158,7 +240,7 @@ class Player extends GameObject {
             }
         }
 
-        if (status === 4 || status === 5 || status === 6) {
+        if (status === 3 || status === 4 || status === 5 || status === 6) {
             if (this.frame_current_cnt == obj.frame_rate * (obj.frame_cnt - 1)) {
                 if (status === 6) {
                     this.frame_current_cnt--;

@@ -12,6 +12,19 @@ class Gamemap extends GameObject {
         this.$canvas.focus();
 
         this.controller = new Controller(this.$canvas);
+        this.root.$kof.append($(`<div class="kof-head">
+            <div class="kof-head-hp0">
+                <div><div></div></div>
+            </div>
+            <div class="kof-head-timer">
+                <div>60</div>
+            </div>
+            <div class="kof-head-hp1">
+                <div><div></div></div>
+            </div>
+        </div>`))
+        this.time_left = 60000;
+        this.$timer = this.root.$kof.find(`.kof-head-timer`);
 
     }
 
@@ -20,6 +33,15 @@ class Gamemap extends GameObject {
     }
 
     update() {
+        this.time_left = this.time_left - this.timedelta;
+
+        if (this.time_left < 0) {
+            this.time_left = 0;
+            let [a, b] = this.root.players;//当时间结束对两名玩家的操作
+
+        }
+
+        this.$timer.text(parseInt(this.time_left / 1000));
         this.render();
     }
 
