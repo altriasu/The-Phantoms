@@ -5,7 +5,7 @@
         </div>
         <div class="userbody">
             <div class="haedimg">
-                <img src="../assets/images/personheadimg.jpg" alt="">
+                <img :src="user.photo" alt="">
             </div>
             <div class="person-info">
                 <div class="person-info-text">

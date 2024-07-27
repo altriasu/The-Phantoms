@@ -1,10 +1,11 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import myPalace from '../views/myPalace.vue'
-import FightView from '../views/FightView.vue'
-import RegisterView from '../views/RegisterView.vue'
-import NotFound from '../views/NotFound.vue'
+import { createRouter, createWebHashHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import LoginView from '../views/LoginView.vue';
+import myPalace from '../views/myPalace.vue';
+import FightView from '../views/FightView.vue';
+import RegisterView from '../views/RegisterView.vue';
+import NotFound from '../views/NotFound.vue';
+import UserlistView from '@/views/UserlistView.vue';
 
 const routes = [
   {
@@ -13,30 +14,39 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/mypalace',
+    path: '/mypalace/:userId/',
     name: 'mypalace',
     component: myPalace
   },
   {
-    path: '/fight',
+    path: '/fight/',
     name: 'fight',
     component: FightView
   },
   {
-    path: '/login',
+    path: '/userlist/',
+    name: 'userlist',
+    component: UserlistView
+  },
+  {
+    path: '/login/',
     name: 'login',
     component: LoginView
   },
   {
-    path: '/register',
+    path: '/register/',
     name: 'register',
     component: RegisterView
   },
   {
-    path: '/404',
+    path: '/404/',
     name: '404',
     component: NotFound
   },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/404/'
+  }
 
 ]
 

@@ -1,10 +1,12 @@
 <template>
   <NavBar/>
-  <router-view/>
+  <router-view :key="$route.fullPath"/>
 </template>
 
 <script>
 import NavBar from './components/navBar.vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap';
 export default{
   name: 'App',
   components:{
@@ -19,7 +21,7 @@ export default{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-image: url(./assets/images/bg.jpeg);
+  background-image: url('./assets/images/bg.jpeg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
