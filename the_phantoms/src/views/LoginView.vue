@@ -167,7 +167,7 @@ export default {
   .box .content {
     width: 85vw;
     height: 90vh;
-    background: url("../assets/images/register/login_two.jpg") no-repeat;
+    background: url("../assets/images/register/login_two.png") no-repeat;
     background-size: 90% 100%;
     position: absolute;
     right: 15%;
@@ -180,7 +180,7 @@ export default {
   .box .content .login-wrapper {
     width: 25vw;
     position: absolute;
-    right: 15%;
+    right: 7%;
     top: 50%;
     transform: translateY(-50%);
   }

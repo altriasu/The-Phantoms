@@ -6,4 +6,4 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
 
 
-createApp(App).use(router).use(store).use(store).mount('#app')
+createApp(App).use(router).use(store).mount('#app')

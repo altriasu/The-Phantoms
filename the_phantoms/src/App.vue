@@ -1,6 +1,8 @@
 <template>
-  <NavBar/>
-  <router-view :key="$route.fullPath"/>
+  <div style="margin: 0; padding: 0;">
+    <NavBar/>
+    <router-view :key="$route.fullPath"/>
+  </div>
 </template>
 
 <script>
@@ -32,11 +34,12 @@ export default{
 
 nav {
   padding: 30px;
+  background-color: #222222;
 }
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #9D9D9D;
 }
 
 nav a.router-link-exact-active {

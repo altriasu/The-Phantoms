@@ -16,6 +16,6 @@
 
 <style scoped>
 .home{
-    margin-top: 10px;
+    padding-top: 100px;
 }
 </style>
